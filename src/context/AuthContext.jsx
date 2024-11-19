@@ -35,6 +35,7 @@ export const AuthProvider = ({ children }) => {
         setToken(null);
         setUserToken(null);
         sessionStorage.removeItem('token');
+        sessionStorage.removeItem('user');
     }
 
     useEffect(() => {
@@ -56,18 +57,18 @@ export const AuthProvider = ({ children }) => {
     }, [token]);
 
     useEffect(() => {
-        // console.log('Auth useEffect ', userToken, 'and token ', token)
+        console.log('Auth useEffect ', userToken, 'and token ', token)
         if (userToken !== null && userToken !== undefined) { 
             const userObject = { uuid: userToken.uuid, username: userToken.usuario };
             sessionStorage.setItem('user', JSON.stringify(userObject));
             console.log('User added to the session storage');
         } else {
-            // if (token) {
+            // if (sessionStorage.getItem('token')) {
             //     console.log('Updating userToken from its useEffect')
             //     updateUser();
             // }
         }
-    }, [userToken] )
+    }, [ userToken] )
 
     return (
         <AuthContext.Provider value={{ token, login, logout, updateUser }}>

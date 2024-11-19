@@ -4,9 +4,9 @@ import apiClient from '../config/api/apiClient';
 const login = async (username, password) => {
     try {
         const response = await apiClient.post(API_ROUTES.LOGIN, { username, password });
-        const token = response.data;
+        const token = response.headers['authorization'];
         const status = response.status;
-        // console.log(response)
+        console.log('Headers: ', token);
         return { token, status }; 
     } catch (error) {
         if (error.response) {

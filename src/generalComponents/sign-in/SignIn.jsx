@@ -21,6 +21,7 @@ import ForgotPassword from './ForgotPassword';
 import { SitemarkIcon } from './CustomIcons';
 import AppTheme from '../shared-theme/AppTheme';
 import ColorModeSelect from '../shared-theme/ColorModeSelect';
+import { useGeneralContext } from '../../context/GeneralContext';
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: 'flex',
@@ -65,7 +66,9 @@ const SignInContainer = styled(Stack)(({ theme }) => ({
 }));
 
 export default function SignIn(props) {
-  const { login, updateUser } = useAuthContext();
+  const { login, updateUser, logout } = useAuthContext();
+
+  logout();
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');

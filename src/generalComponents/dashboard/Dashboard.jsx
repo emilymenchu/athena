@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useAuthContext } from '../../context/AuthContext';
-import { useRoutes, BrowserRouter, Outlet } from 'react-router-dom';
+import { useRoutes, BrowserRouter, Outlet, useNavigate } from 'react-router-dom';
 import { alpha } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
@@ -16,6 +16,7 @@ import {
   datePickersCustomizations,
   treeViewCustomizations,
 } from './theme/customizations';
+import { useGeneralContext } from '../../context/GeneralContext';
 
 const xThemeComponents = {
   ...chartsCustomizations,
@@ -25,12 +26,27 @@ const xThemeComponents = {
 };
 
 export default function Dashboard(props) {
+const { token } = useAuthContext();
+
+const { getUser } = useGeneralContext();
+
+const navigate = useNavigate();
+
+React.useEffect(() => {
+  if (!sessionStorage.getItem('token')) {
+    // navigate('/');
+  } else {
+    getUser();
+    console.log('Bla')
+  }
+}, [token])
+
 
 
   return (
     <AppTheme {...props} themeComponents={xThemeComponents}>
       <CssBaseline enableColorScheme />
-      <Box sx={{ display: 'flex' }}>
+      <Box sx={{ display: 'flex', height:'100vh'}}>
         <SideMenu />
         <AppNavbar />
         {/* Main content */}
@@ -51,6 +67,7 @@ export default function Dashboard(props) {
               mx: 3,
               pb: 5,
               mt: { xs: 8, md: 0 },
+              height:'100%'
             }}
           >
             <Header />

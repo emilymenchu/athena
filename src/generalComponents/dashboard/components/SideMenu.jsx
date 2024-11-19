@@ -11,6 +11,7 @@ import MenuContent from './MenuContent';
 import CardAlert from './CardAlert';
 import OptionsMenu from './OptionsMenu';
 import { useGeneralContext } from '../../../context/GeneralContext';
+import { Skeleton } from '@mui/material';
 
 const drawerWidth = 240;
 
@@ -60,12 +61,11 @@ export default function SideMenu() {
           borderColor: 'divider',
         }}
       >
-        <Avatar
-          sizes="small"
-          alt={user && user.usuario}
-          src="/static/images/avatar/7.jpg"
-          sx={{ width: 36, height: 36 }}
-        />
+       { user ? (
+                    <Avatar sizes='small' alt={user.nombre} src={user.foto}  sx={{ width: 36, height: 36 }}/>
+                ) : (
+                    <Skeleton variant='circular' width={36} height={36} />
+        )}
         <Box sx={{ mr: 'auto' }}>
           <Typography variant="body2" sx={{ fontWeight: 500, lineHeight: '16px' }}>
             {user && user.usuario}

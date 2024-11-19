@@ -49,7 +49,7 @@ const data = [
 export default function MainGrid( { children } ) {
   const { moduleName } = useGeneralContext();
   return (
-    <Box sx={{ width: '100%', maxWidth: { sm: '100%', md: '1700px' } }}>
+    <Box sx={{ width: '100%', maxWidth: { sm: '100%', md: '1700px' }, height:'100%', maxHeight: { sm: '100%', md: '1700px' }, }}>
       {/* cards */}
       <Typography component="h2" variant="h6" sx={{ mb: 2 }}>
         {moduleName}
