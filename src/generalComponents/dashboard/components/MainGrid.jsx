@@ -11,6 +11,7 @@ import HighlightedCard from './HighlightedCard';
 import PageViewsBarChart from './PageViewsBarChart';
 import SessionsChart from './SessionsChart';
 import StatCard from './StatCard';
+import { useGeneralContext } from '../../../context/GeneralContext';
 
 const data = [
   {
@@ -45,14 +46,17 @@ const data = [
   },
 ];
 
-export default function MainGrid() {
+export default function MainGrid( { children } ) {
+  const { moduleName } = useGeneralContext();
   return (
     <Box sx={{ width: '100%', maxWidth: { sm: '100%', md: '1700px' } }}>
       {/* cards */}
       <Typography component="h2" variant="h6" sx={{ mb: 2 }}>
-        Overview
+        {moduleName}
       </Typography>
-      <Grid
+
+      { children }
+      {/* <Grid
         container
         spacing={2}
         columns={12}
@@ -86,7 +90,7 @@ export default function MainGrid() {
             <ChartUserByCountry />
           </Stack>
         </Grid>
-      </Grid>
+      </Grid> */}
       <Copyright sx={{ my: 4 }} />
     </Box>
   );

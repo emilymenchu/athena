@@ -1,5 +1,6 @@
 import * as React from 'react';
-
+import { useAuthContext } from '../../context/AuthContext';
+import { useRoutes, BrowserRouter, Outlet } from 'react-router-dom';
 import { alpha } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
@@ -24,6 +25,8 @@ const xThemeComponents = {
 };
 
 export default function Dashboard(props) {
+
+
   return (
     <AppTheme {...props} themeComponents={xThemeComponents}>
       <CssBaseline enableColorScheme />
@@ -51,9 +54,13 @@ export default function Dashboard(props) {
             }}
           >
             <Header />
-            <MainGrid />
+
+            <MainGrid>
+                <Outlet />
+            </MainGrid>
           </Stack>
         </Box>
+
       </Box>
     </AppTheme>
   );

@@ -1,11 +1,14 @@
 import * as React from 'react';
-import { useNavigate } from 'react-router-dom';  // Importa el hook useNavigate
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; 
+import { useAuthContext } from '../../context/AuthContext';
+import Alert from '@mui/material/Alert';
+import AlertTitle from '@mui/material/AlertTitle';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Checkbox from '@mui/material/Checkbox';
 import CssBaseline from '@mui/material/CssBaseline';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import Divider from '@mui/material/Divider';
 import FormLabel from '@mui/material/FormLabel';
 import FormControl from '@mui/material/FormControl';
 import Link from '@mui/material/Link';
@@ -15,7 +18,7 @@ import Stack from '@mui/material/Stack';
 import MuiCard from '@mui/material/Card';
 import { styled } from '@mui/material/styles';
 import ForgotPassword from './ForgotPassword';
-import { GoogleIcon, FacebookIcon, SitemarkIcon } from './CustomIcons';
+import { SitemarkIcon } from './CustomIcons';
 import AppTheme from '../shared-theme/AppTheme';
 import ColorModeSelect from '../shared-theme/ColorModeSelect';
 
@@ -62,11 +65,17 @@ const SignInContainer = styled(Stack)(({ theme }) => ({
 }));
 
 export default function SignIn(props) {
-  const [userError, setUserError] = React.useState(false);
-  const [userErrorMessage, setUserErrorMessage] = React.useState('');
-  const [passwordError, setPasswordError] = React.useState(false);
-  const [passwordErrorMessage, setPasswordErrorMessage] = React.useState('');
-  const [open, setOpen] = React.useState(false);
+  const { login, updateUser } = useAuthContext();
+
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [userError, setUserError] = useState(false);
+  const [userErrorMessage, setUserErrorMessage] = useState('');
+  const [passwordError, setPasswordError] = useState(false);
+  const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
+  const [credentialsError, setCredentialsError] = useState(false);
+  const [creErrorMessage, setCreErrorMessage] = useState('');
+  const [open, setOpen] = useState(false);
 
   const navigate = useNavigate();
 
@@ -78,18 +87,36 @@ export default function SignIn(props) {
     setOpen(false);
   };
 
-  const handleSubmit = (event) => {
+  const handleLogin = async (event) => {
+    event.preventDefault();
     if (userError || passwordError) {
-      event.preventDefault();
       return;
     }
-    const data = new FormData(event.currentTarget);
-    console.log({
-      user: data.get('user'),
-      password: data.get('password'),
-    });
 
-    navigate('/dashboard')
+    try {
+      const { status } = await login (username, password);
+
+      if (status === 200) {
+        updateUser();
+        navigate('/dashboard');
+      } 
+
+    } catch (error){
+      if (error.status === 401) {
+        setCredentialsError(true)
+        setCreErrorMessage(error.message)
+      } else {
+        setCredentialsError(true)
+        setCreErrorMessage('Error al ingresar. Inténtelo más tarde. ', error.message)
+      }
+
+    }
+    // const data = new FormData(event.currentTarget);
+    // console.log({
+    //   user: data.get('user'),
+    //   password: data.get('password'),
+    // });
+
   };
 
   const validateInputs = () => {
@@ -107,9 +134,9 @@ export default function SignIn(props) {
       setUserErrorMessage('');
     }
 
-    if (!password.value || password.value.length < 6) {
+    if (!password.value || password.value.length < 4) {
       setPasswordError(true);
-      setPasswordErrorMessage('Password must be at least 6 characters long.');
+      setPasswordErrorMessage('Password must be at least 4 characters long.');
       isValid = false;
     } else {
       setPasswordError(false);
@@ -135,7 +162,7 @@ export default function SignIn(props) {
           </Typography>
           <Box
             component="form"
-            onSubmit={handleSubmit}
+            onSubmit={handleLogin}
             noValidate
             sx={{
               display: 'flex',
@@ -159,6 +186,8 @@ export default function SignIn(props) {
                 fullWidth
                 variant="outlined"
                 color={userError ? 'error' : 'primary'}
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
               />
             </FormControl>
             <FormControl>
@@ -176,8 +205,16 @@ export default function SignIn(props) {
                 fullWidth
                 variant="outlined"
                 color={passwordError ? 'error' : 'primary'}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
             </FormControl>
+            {credentialsError && (
+              <Alert severity="error" color="info">
+                <AlertTitle>Error</AlertTitle>
+                  {creErrorMessage}
+              </Alert>
+            )}
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Recordarme"
