@@ -1,0 +1,10 @@
+.myaccount-main-container{
+    width: 100%;
+    height: 90%;
+}
+
+.image-input {
+    width: 50%;
+    height: 50%;
+    border-radius: 50%;
+}

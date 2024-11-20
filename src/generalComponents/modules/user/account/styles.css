@@ -1,0 +1,88 @@
+.myaccount-main-container {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.cards-container {
+    width: 100%;
+    height: 100%;
+}
+
+.images-container {
+    width: 100%;
+    height: 60%;
+    position: relative;
+}
+
+.main-profile-foto {
+    width: 130px;
+    height: 130px;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%) translateY(50%);
+    border: solid 2px rgb(255, 255, 255);
+    background-color: rgb(39, 41, 44);
+    border-radius: 50%;
+    z-index: 10;
+}
+.background-img {
+    border-radius: 7px;
+    width: 100%;
+    height: 100%;
+    background: url('https://images.pexels.com/photos/355288/pexels-photo-355288.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2') center/cover no-repeat;
+}
+.user-info-container {
+    margin-top: 90px;
+    height: 20%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    flex: 1;
+    padding: 5px;
+}
+
+.cards-container {
+    display: flex;
+    width: 100%;
+    justify-content: flex-start;
+    gap: 40px
+}
+
+.card-info-container {
+    width: 30%;
+    height: 40%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 5%;
+}
+
+.info-list-item {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+    list-style: none;
+}
+.sells-card-container {
+    flex: 1;
+}
+
+@media (max-width: 1350px) {
+    .cards-container {
+        flex-direction: column;
+    }
+    .card-info-container {
+        width: 100%;
+    }
+    .main-profile-foto {
+        width: 100px;
+        height: 100px;
+    }
+    .user-info-container {
+        margin-top: 65px;
+    }
+}
