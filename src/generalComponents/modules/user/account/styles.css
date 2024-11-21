@@ -1,8 +1,7 @@
 .myaccount-main-container {
     display: flex;
     flex-direction: column;
-    gap: 40px;
-}
+    gap: var(--gap-medium);}
 
 .cards-container {
     width: 100%;
@@ -48,7 +47,7 @@
     display: flex;
     width: 100%;
     justify-content: flex-start;
-    gap: 40px
+    gap: var(--gap-medium);
 }
 
 .card-info-container {

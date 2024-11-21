@@ -182,10 +182,10 @@ export default function SignIn(props) {
                 error={userError}
                 helperText={userErrorMessage}
                 id="user"
-                type="user"
+                type="text"
                 name="user"
                 placeholder="usuario"
-                autoComplete="user"
+                autoComplete="username"
                 autoFocus
                 required
                 fullWidth

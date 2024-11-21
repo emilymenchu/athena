@@ -79,3 +79,14 @@ body {
   height: 100%;
   min-height: 100vh
 }
+
+:root {
+  --gray-background-color: #61627637;
+  --light-gray-text-color: #838693;
+  --gray-background-color-hover: #53556642;
+  --light-gray-text-color-hover: #51547a;
+
+  --highlights-blue: rgb(108, 135, 156);
+
+  --gap-medium: 30px;
+}
